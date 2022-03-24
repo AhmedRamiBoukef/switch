@@ -21,6 +21,10 @@ const portSchemas = new mongoose.Schema({
             type: Boolean,
             required: true
         },
+        EtatDePort: {
+            type: String,
+            required: true
+        },
         Cascades_vers_depuis : {
             type: String,
             required: true
@@ -30,7 +34,7 @@ const portSchemas = new mongoose.Schema({
             required: true
         },
         prise: {
-            type: Number,
+            type: String,
             required: true
         } 
     

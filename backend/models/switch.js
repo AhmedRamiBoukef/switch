@@ -29,6 +29,10 @@ const switchSchemas = new mongoose.Schema({
             type: String,
             required: true
         },
+        N_Serie: {
+            type: String,
+            required: true
+        },
         Adresse_MAC: {
             type: String,
             required: true
