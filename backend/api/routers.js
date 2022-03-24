@@ -57,6 +57,33 @@ router.get('/search', async (req, res) => {
     }
 })
 
+router.get('/getbyid', async (req ,res) => {
+    const elem = await Switch.findById(req.body._id)
+    const ports = await Port.find({ nom_switch: elem.Nom })
+    console.log(elem,ports);
+})
+
+router.get('/search/port', async (req ,res) => {
+    let data
+    if(typeof(req.body.id) ==="string") {
+        data = await Port.find({
+            $or: [
+                {ip_vlan: req.body.id},
+                {type: req.body.id},
+                {Cascades_vers_depuis: req.body.id},
+                {prise: req.body.id},
+                {nom_switch: req.body.id}
+            ]
+        })
+    } else {
+        data = await Port.find({
+            $or: [
+                {nm_port: req.body.id}
+            ]
+        })
+    }
+    console.log(data);  
+})
 
 
 
