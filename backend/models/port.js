@@ -29,6 +29,10 @@ const portSchemas = new mongoose.Schema({
             type: String,
             required: true
         },
+        Cable: {
+            type: String,
+            required: true
+        },
         Entree: {
             type: Boolean,
             required: true
