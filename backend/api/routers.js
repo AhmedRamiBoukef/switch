@@ -10,13 +10,37 @@ const { redirect } = require('express/lib/response');
 router.get('/modifier',async ( req,res)=>{
     const data = await Switch.findById(req.body._id);
      console.log(data);
-     const dataport = await Port.find({nom_switch : data.Nom});
+     const dataport = await Port.find({nom_switch : data.Nom}).sort({"nm_port":1});
      res.json({
          switch : data , 
          port : dataport 
      });
      
 })
+
+
+router.put('/modifier', async (req ,res) => {
+   const data = await Switch.findOne({"N_d_inventaire":req.body.N_d_inventaire})
+   let nom = data.Nom
+   const mod = await Switch.updateOne({_id:data._id},req.body)
+   const p = await Port.updateMany({nom_switch:nom},{nom_switch:req.body.Nom})
+   const dataport = await Port.find({nom_switch:req.body.Nom}).sort({"nm_port":1})
+    
+   res.send(dataport)
+})
+
+router.put('/modifierPort', async (req ,res) => {
+
+// il faut yab3ath nom de switch
+
+
+    for (const ele in req.body) {
+        const mod = await Port.updateOne({_id:ele._id},ele)
+        
+    }
+    res.send("Success")
+})
+
 
 
 router.get('/switch', async (req, res) => {
