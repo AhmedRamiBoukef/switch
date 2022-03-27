@@ -37,10 +37,6 @@ router.post('/postswitch', (req, res) => {
     res.redirect('/api/ports')
 })
 
-router.put('/t', async (req ,res) => {
-    const data = await Switch.updateOne({_id:req.body._id},req.body)
-    res.send(data)
-})
 
 
 router.get('/search', async (req, res) => {
