@@ -5,7 +5,7 @@ const _ = require('lodash');
 const cors = require('cors');
 const Switch = require('./models/switch');
 
-const dbURI = 'mongodb://localhost:27017/switch'
+const dbURI = 'mongodb://0.0.0.0:27017/switch'
 
 mongoose.connect(dbURI,{ useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
