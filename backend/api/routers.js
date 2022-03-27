@@ -66,9 +66,14 @@ router.get('/search', async (req, res) => {
 })
 
 router.get('/getbyid', async (req ,res) => {
+    console.log(req.body);
     const elem = await Switch.findById(req.body._id)
     const ports = await Port.find({ nom_switch: elem.Nom })
     console.log(elem,ports);
+    res.send({
+        switch: elem,
+        ports: ports
+    })
 })
 
 router.get('/search/port', async (req ,res) => {
