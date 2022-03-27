@@ -4,11 +4,19 @@ const Port = require('../models/port');
 const Switch = require('../models/switch');
 const { pickBy, identity } = require('lodash')
 const _ = require('lodash')
-const { redirect } = require('express/lib/response');
+const { redirect } = require('express/lib/response'); 
+
+ //modification dans la base de donnnée (switch)
+ router.put('/modswitch',async ( req,res)=>{
+     console.log(req.body._id);
+   const elem = await Switch.updateOne({_id:req.body._id},req.body)  
+   res.send(elem)
+})
 
 
 router.get('/switch', async (req, res) => {
     const data = await Switch.find()
+    console.log(data);
     res.send(data)
 })
 
