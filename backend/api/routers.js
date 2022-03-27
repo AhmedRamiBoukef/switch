@@ -20,14 +20,20 @@ router.get('/ports', (req ,res) => {
 router.post('/postport', (req, res) => {
     const p = new Port(req.body)
     p.save()
-    res.redirect('/get')
+    res.redirect('/api/switch')
 })
 
 router.post('/postswitch', (req, res) => {
     const s = new Switch(req.body)
     s.save()
-    res.redirect('/get')
+    res.redirect('/api/ports')
 })
+
+router.put('/t', async (req ,res) => {
+    const data = await Switch.updateOne({_id:req.body._id},req.body)
+    res.send(data)
+})
+
 
 router.get('/search', async (req, res) => {
     const dataSwitch = pickBy({
@@ -47,13 +53,13 @@ router.get('/search', async (req, res) => {
     let table2 = resultSwitch.map((ele) => ele.Nom)
     if(Object.keys(dataPort).length && Object.keys(dataSwitch).length){
         let fin = await Switch.find( { Nom: { $in : _.intersection(table,table2) } } )
-        console.log(fin);
+        res.send(fin)
     } else if (Object.keys(dataPort).length) {
         let fin = await Switch.find( { Nom: { $in : table } } )
-        console.log(fin.length);
+        res.send(fin)
 
     } else {
-        console.log(resultSwitch.length);
+        res.send(resultSwitch)
     }
 })
 
@@ -87,7 +93,7 @@ router.get('/search/port', async (req ,res) => {
             ]
         })
     }
-    console.log(data);  
+    res.send(data) 
 })
 
 
