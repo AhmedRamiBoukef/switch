@@ -7,10 +7,15 @@ const _ = require('lodash')
 const { redirect } = require('express/lib/response'); 
 
  //modification dans la base de donnnée (switch)
- router.put('/modswitch',async ( req,res)=>{
-     console.log(req.body._id);
-   const elem = await Switch.updateOne({_id:req.body._id},req.body)  
-   res.send(elem)
+router.get('/modifier',async ( req,res)=>{
+    const data = await Switch.findById(req.body._id);
+     console.log(data);
+     const dataport = await Port.find({nom_switch : data.Nom});
+     res.json({
+         switch : data , 
+         port : dataport 
+     });
+     
 })
 
 
