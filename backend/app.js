@@ -4,8 +4,9 @@ const mongoose = require('mongoose');
 const _ = require('lodash');
 const cors = require('cors');
 const Switch = require('./models/switch');
+const Port = require('./models/port');
 
-const dbURI = 'mongodb://0.0.0.0:27017/switch'
+const dbURI = 'mongodb://localhost:27017/data'
 
 mongoose.connect(dbURI,{ useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
@@ -22,23 +23,36 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 app.use('/api',router)
 
-app.get('/', (req ,res) => {
-    const sw = new Switch({
-        Bloc:"SCBP",
-        Armoire:"Armoire",
-        Nom:"data1",
-        Marque:"Cisco",
-        Modèle:"5",
-        N_Serie: "dzdadza",
-        Adresse_IP:"192.168.1.1",
-        N_d_inventaire:"DKJZNKJDNA",
-        Adresse_MAC:"1.1.1.1",
-        Nombre_de_ports_F_E: _.random(100),
-        Nombre_de_ports_G_E: _.random(100),
-        Nombre_de_ports_SFP: _.random(100),
-        Etat: true
-    }) 
+app.get('/add', (req ,res) => {
+    const sw = new Port({
+        "nm_port":1,
+        "nom_switch":"Bibliothèque",
+        "ip_vlan":"10.0.1.1",
+        "type":"wifi",
+        "cscade":false,
+        "Cascades_vers_depuis":" ",
+        "EtatDePort": "Active",
+        "Entree":true,
+        "Cable":"F_E",
+        "prise":"Bibliothèque"
+        }) 
     sw.save()
     // res.redirect('/')
     console.log(_.random(10));
+})
+
+app.set('view-engine','ejs')
+
+
+app.get('/', (req, res) => {
+    res.render('index.ejs')
+
+})
+
+app.post('/getData', async (req, res) => {
+    let payload = req.body.payload.trim()
+    let search = await Switch.find({Nom:{$regex: new RegExp('^'+payload+'.*','i')}}).exec()
+    search = search.slice(0,10)
+    res.send({payload:search})
+    res.end()
 })

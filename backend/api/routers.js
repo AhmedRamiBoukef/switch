@@ -9,12 +9,12 @@ const { redirect } = require('express/lib/response');
  //modification dans la base de donnnée (switch)
 router.get('/modifier',async ( req,res)=>{
     const data = await Switch.findById(req.body._id);
-     console.log(data);
-     const dataport = await Port.find({nom_switch : data.Nom}).sort({"nm_port":1});
-     res.json({
-         switch : data , 
-         port : dataport 
-     });
+    console.log(data);
+    const dataport = await Port.find({nom_switch : data.Nom}).sort({"nm_port":1});
+    res.json({
+        switch : data , 
+        port : dataport 
+    });
      
 })
 
@@ -31,15 +31,13 @@ router.put('/modifier', async (req ,res) => {
 
 router.put('/modifierPort', async (req ,res) => {
 
-// il faut yab3ath nom de switch
-
-
     for (const ele in req.body) {
         const mod = await Port.updateOne({_id:ele._id},ele)
-        
     }
     res.send("Success")
 })
+
+// cofigurer or ajouter
 
 
 
@@ -49,8 +47,8 @@ router.get('/switch', async (req, res) => {
     res.send(data)
 })
 
-router.get('/ports', (req ,res) => {
-    const data = Port.find(req.body)
+router.get('/ports', async (req ,res) => {
+    const data = await Port.find(req.body)
     res.send(data)
 })
 
@@ -115,8 +113,7 @@ router.get('/search/port', async (req ,res) => {
                 {ip_vlan: req.body.id},
                 {type: req.body.id},
                 {Cascades_vers_depuis: req.body.id},
-                {prise: req.body.id},
-                {nom_switch: req.body.id}
+                {prise: req.body.id}
             ]
         })
     } else {
