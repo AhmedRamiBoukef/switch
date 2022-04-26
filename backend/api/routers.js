@@ -2,9 +2,20 @@ const express = require('express');
 const router = express.Router();
 const Port = require('../models/port');
 const Switch = require('../models/switch');
+const marque = require('../models/marque')
 const { pickBy, identity } = require('lodash')
 const _ = require('lodash')
 const { redirect } = require('express/lib/response'); 
+
+
+router.get('/marque',async ( req,res)=>{
+    const data = await marque.find();
+    console.log(data);
+    res.send(data);
+})
+
+
+
 
  //modification dans la base de donnnée (switch)
 router.get('/modifier',async ( req,res)=>{

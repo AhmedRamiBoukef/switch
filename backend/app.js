@@ -6,7 +6,7 @@ const cors = require('cors');
 const Switch = require('./models/switch');
 const Port = require('./models/port');
 
-const dbURI = 'mongodb://localhost:27017/data'
+const dbURI = 'mongodb+srv://EsiSwitch:esi1234@cluster0.h1vs7.mongodb.net/Data?retryWrites=true&w=majority7017/data'
 
 mongoose.connect(dbURI,{ useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
