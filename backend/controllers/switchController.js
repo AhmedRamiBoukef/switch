@@ -1,0 +1,140 @@
+
+const Port = require('../models/port');
+const Switch = require('../models/switch');
+const { pickBy, identity } = require('lodash')
+const _ = require('lodash')
+const marque = require('../models/marque')
+
+
+module.exports.modifier_get = async ( req,res)=>{
+    const data = await Switch.findById(req.body._id);
+    console.log(data);
+    const dataport = await Port.find({nom_switch : data.Nom}).sort({"nm_port":1});
+    res.json({
+        switch : data , 
+        port : dataport 
+    });
+}
+
+module.exports.marque = async ( req,res)=>{
+    const data = await marque.find();
+    console.log(data);
+    res.send(data);
+}
+
+
+module.exports.modifier_put = async (req ,res) => {
+    const data = await Switch.findOne({"N_d_inventaire":req.body.N_d_inventaire})
+    let nom = data.Nom
+    const mod = await Switch.updateOne({_id:data._id},req.body)
+    const p = await Port.updateMany({nom_switch:nom},{nom_switch:req.body.Nom})
+    const dataport = await Port.find({nom_switch:req.body.Nom}).sort({"nm_port":1})
+     
+    res.send(dataport)
+ }
+
+ module.exports.modifierport = async (req ,res) => {
+
+    for (let i = 0;i<req.body.length;i++) {
+        const mod = await Port.updateOne({_id:req.body[i]._id},req.body[i])
+        console.log(req.body[i]);
+    }
+    res.json(true)
+}
+
+module.exports.switch_get = async (req, res) => {
+    const data = await Switch.find()
+    console.log(data);
+    res.send(data)
+}
+
+
+module.exports.ports_get = async (req ,res) => {
+    const data = await Port.find(req.body)
+    res.send(data)
+}
+
+module.exports.port_get = async (req ,res) => {
+    const data = await Port.find()
+    res.send(data)
+}
+
+module.exports.postport = (req, res) => {
+    const p = new Port(req.body)
+    p.save()
+    res.send(p)
+}
+
+
+module.exports.postswitch = async (req, res) => {
+    try {
+        const s = await Switch.create(req.body)
+        res.send(s)
+    } catch (error) {
+        if (error.code === 11000) {
+            res.status(400).json( "errors" );
+          }
+    }
+}
+
+
+module.exports.search = async (req, res) => {
+    const dataSwitch = pickBy({
+        Nom: req.body.Nom,
+        Marque: req.body.Marque,
+        Bloc: req.body.Bloc,
+        Adresse_MAC: req.body.Adresse_MAC,
+        N_d_inventaire: req.body.N_d_inventaire
+    },identity)
+    const dataPort = pickBy({
+        ip_vlan: req.body.ip_vlan,
+        prise: req.body.prise
+    },identity)
+    let resultSwitch = await Switch.find(dataSwitch)
+    let resultPort = await Port.find(dataPort)
+    let table = resultPort.map((ele) => ele.nom_switch)
+    let table2 = resultSwitch.map((ele) => ele.Nom)
+    if(Object.keys(dataPort).length && Object.keys(dataSwitch).length){
+        let fin = await Switch.find( { Nom: { $in : _.intersection(table,table2) } } )
+        res.send(fin)
+    } else if (Object.keys(dataPort).length) {
+        let fin = await Switch.find( { Nom: { $in : table } } )
+        res.send(fin)
+
+    } else {
+        res.send(resultSwitch)
+    }
+}
+
+
+module.exports.getbyid = async (req ,res) => {
+    console.log(req.body);
+    const elem = await Switch.findById(req.body._id)
+    const ports = await Port.find({ nom_switch: elem.Nom }).sort({"nm_port":1})
+    console.log(elem,ports);
+    res.send({
+        switch: elem,
+        ports: ports
+    })
+}
+
+module.exports.search_port = async (req ,res) => {
+    let data
+    if(typeof(req.body.id) ==="string") {
+        data = await Port.find({
+            $or: [
+                {ip_vlan: req.body.id},
+                {type: req.body.id},
+                {Cascades_vers_depuis: req.body.id},
+                {prise: req.body.id}
+            ]
+        })
+    } else {
+        data = await Port.find({
+            $or: [
+                {nm_port: req.body.id}
+            ]
+        })
+    }
+    res.send(data) 
+}

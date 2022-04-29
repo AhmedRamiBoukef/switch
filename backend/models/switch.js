@@ -11,7 +11,9 @@ const switchSchemas = new mongoose.Schema({
         },
         Nom: {
             type: String,
-            required: true
+            unique : true, 
+            required : true, 
+            dropDups: true
         },
         Marque: {
             type: String,
@@ -27,11 +29,12 @@ const switchSchemas = new mongoose.Schema({
         },
         N_d_inventaire: {
             type: String,
-            required: true
+            required: true,
+            unique: true,
         },
         N_Serie: {
             type: String,
-            required: true
+            required: true,
         },
         Adresse_MAC: {
             type: String,
