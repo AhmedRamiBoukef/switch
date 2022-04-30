@@ -15,7 +15,7 @@ const { pickBy, identity } = require('lodash')
 const { signup_post } = require('./controllers/authController');
 const { use } = require('./routes/authRoutes');
 
-const dbURI = 'mongodb+srv://EsiSwitch:esi1234@cluster0.h1vs7.mongodb.net/Data?retryWrites=true&w=majority'
+const dbURI = 'mongodb+srv://EsiSwitch:esi1234@cluster0.h1vs7.mongodb.net/Data?retryWrites=true&w=majority/Data'
 
 mongoose.connect(dbURI,{ useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
@@ -36,13 +36,16 @@ app.use('/api',router)
 
 
 app.get('*', checkUser);
-app.post('/createuser',requireAuth,isAdmin,signup_post);
-app.get('/getusers',requireAuth,isAdmin,async (req,res)=>{
+app.post('/createuser',signup_post);
+app.get('/getusers',async (req,res)=>{
   const users = await User.find().select(["-password"]); 
   res.send(users)
 })
 
-app.post("/modifieradmin",requireAuth,isAdmin, (req ,res) => {
+
+//create modifier mofier
+// getbyid
+app.post("/modifieradmin", (req ,res) => {
   const dataUser = pickBy({
     prenom: req.body.prenom,
     name: req.body.name,
@@ -59,7 +62,7 @@ dataUser.role = req.body.role
 })
 
 
-app.get('/getbyid',requireAuth,isAdmin, (req ,res) => {
+app.get('/getbyid', (req ,res) => {
   const user = User.find({_id:req.body._id})
   res.send(user)
 })
@@ -93,7 +96,7 @@ app.post('/active',requireAuth,isAdmin,async (req,res)=>{
   })
   res.send(user)
 })
-app.post('/modifierPassword',requireAuth,async(req,res)=>{
+app.post('/modifierPassword',async(req,res)=>{
   const salt = await bcrypt.genSalt();
   const password = await bcrypt.hash(req.body.password, salt);
   const user = await User.updateOne({_id : req.body._id },{
