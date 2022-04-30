@@ -72,22 +72,11 @@ const createToken = (email,id, isAdmin) => {
 
 module.exports.signup_post = async (req, res) => {
   const deleted=0 ;
-  const { name, email, role, phone, occupation } = req.body;
-  const crypto = require('crypto')
-
-const generatePassword = (
-  length = 10,
-  wishlist = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~!@-#$'
-) =>
-  Array.from(crypto.randomFillSync(new Uint32Array(length)))
-    .map((x) => wishlist[x % wishlist.length])
-    .join('')
-  const password = generatePassword();
+  const { name,prenom, email, role, phone, occupation,password } = req.body;
   try {
-    const user = await User.create({ name, email, password,role,deleted,phone,occupation});
+    const user = await User.create({ name, email,prenom, password,role,deleted,phone,occupation});
     
     const token = createToken(user.email,user._id,user.role);
-    console.log(password);
     sendMail(
       email ,
       "Bienvenue dans EsiSwitch",

@@ -44,15 +44,20 @@ app.get('/getusers',requireAuth,isAdmin,async (req,res)=>{
 
 app.post("/modifieradmin",requireAuth,isAdmin, (req ,res) => {
   const dataUser = pickBy({
+    prenom: req.body.prenom,
     name: req.body.name,
     email: req.body.email,
-    role: req.body.role,
-    deleted: req.body.deleted,
+    phone: req.body.phone,
+    occupation: req.body.occupation
 },identity)
-  const user = User.updateOne({email: dataUser.updateOne},dataUser)
-  res.send(user)
+dataUser.deleted = req.body.deleted
+dataUser.role = req.body.role
+  const user = User.updateOne({_id: req.body._id},dataUser)
+  console.log(user);
+  res.send("success")
 
 })
+
 
 app.get('/getbyid',requireAuth,isAdmin, (req ,res) => {
   const user = User.find({_id:req.body._id})
@@ -77,10 +82,8 @@ app.get('/getCurrentUser',requireAuth,(req,res)=>{
 
   }
 })
-app.post('/desactive',requireAuth,isAdmin,async (req,res)=>{
-  const user =  await User.updateOne({_id:req.body._id},{
-    deleted : true 
-  })
+app.post('/delete',requireAuth,isAdmin,async (req,res)=>{
+  const user =  await User.deleteOne({_id:req.body._id})
   res.send(user)
 }
 )
