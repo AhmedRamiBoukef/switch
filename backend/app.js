@@ -15,7 +15,7 @@ const { pickBy, identity } = require('lodash')
 const { signup_post } = require('./controllers/authController');
 const { use } = require('./routes/authRoutes');
 
-const dbURI = 'mongodb://0.0.0.0:27017/Data'
+const dbURI = 'mongodb+srv://EsiSwitch:esi1234@cluster0.h1vs7.mongodb.net/Data?retryWrites=true&w=majority'
 
 mongoose.connect(dbURI,{ useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
