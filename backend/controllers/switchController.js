@@ -26,11 +26,20 @@ module.exports.marque = async ( req,res)=>{
 module.exports.modifier_put = async (req ,res) => {
     const data = await Switch.findOne({"N_d_inventaire":req.body.N_d_inventaire})
     let nom = data.Nom
+   try {
     const mod = await Switch.updateOne({_id:data._id},req.body)
     const p = await Port.updateMany({nom_switch:nom},{nom_switch:req.body.Nom})
-    const dataport = await Port.find({nom_switch:req.body.Nom}).sort({"nm_port":1})
-     
+    const dataport = await Port.find({nom_switch:req.body.Nom}).sort({"nm_port":1}) 
     res.send(dataport)
+   }
+   catch(error)
+   {
+       if (error.code===11000)
+       {
+        res.status(404).json("ce Nom de Switch ("+error.keyValue.Nom+") existe deja")
+       }
+   }
+    
  }
 
  module.exports.modifierport = async (req ,res) => {
@@ -67,14 +76,19 @@ module.exports.postport = (req, res) => {
 
 
 module.exports.postswitch = async (req, res) => {
-    try {
+   try{
         const s = await Switch.create(req.body)
         res.send(s)
-    } catch (error) {
-        if (error.code === 11000) {
-            res.status(400).json( "errors" );
-          }
-    }
+   }   
+   catch (error) {
+        if (error._message ==="Switch validation failed"){
+            let type ;
+           if(error.errors.Nom!=undefined) { type= error.errors.Nom.path }
+           else if(error.errors.N_d_inventaire!=undefined) { type =error.errors.N_d_inventaire.path } 
+            res.status(400).json('ce '+type+' de switch existe deja ');
+        }
+       
+    } 
 }
 
 

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+var uniqueValidator = require('mongoose-unique-validator');
 
 const switchSchemas = new mongoose.Schema({
         Bloc: {
@@ -10,10 +11,10 @@ const switchSchemas = new mongoose.Schema({
             required: true
         },
         Nom: {
-            type: String,
-            unique : true, 
-            required : true, 
-            dropDups: true
+            type: String, 
+            required : true,
+            unique :  'ce nom de switch existe deja'
+            
         },
         Marque: {
             type: String,
@@ -30,7 +31,7 @@ const switchSchemas = new mongoose.Schema({
         N_d_inventaire: {
             type: String,
             required: true,
-            unique: true,
+           unique :  'ce num d inventaire existe deja'
         },
         N_Serie: {
             type: String,
@@ -57,6 +58,7 @@ const switchSchemas = new mongoose.Schema({
             required: true
         }
 }, { timestamps: true });
+switchSchemas.plugin(uniqueValidator);
 
 const Switch = mongoose.model('Switch',switchSchemas);
 
