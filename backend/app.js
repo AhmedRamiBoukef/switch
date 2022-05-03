@@ -15,7 +15,7 @@ const { pickBy, identity } = require('lodash')
 const { signup_post } = require('./controllers/authController');
 const { use } = require('./routes/authRoutes');
 
-const dbURI = 'mongodb+srv://EsiSwitch:esi1234@cluster0.h1vs7.mongodb.net/Data?retryWrites=true&w=majority/Data'
+const dbURI = 'mongodb+srv://EsiSwitch:esi1234@cluster0.h1vs7.mongodb.net/Data?retryWrites=true'
 
 mongoose.connect(dbURI,{ useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
@@ -133,7 +133,8 @@ function sendMail(resiver , subject , text ){
 
 app.post('/forgetPassword',async (req,res)=>
 {
-  const user =User.find({email : req.body.email})
+ 
+  const user = await User.findOne({email : req.body.email})
   if(!user)
   {
     res.status(404).send({msg : "ce email n'existe pas "})
@@ -149,9 +150,9 @@ const generatePassword = (
     .join('')
 
 const password1 = generatePassword() ; 
-const salt = await bcrypt.genSalt();
+const salt = await bcrypt.genSalt(); 
   const password = await bcrypt.hash(password1, salt);
-  const user1 = await User.updateOne({_id : user._id },{
+  const user1 = await User.updateOne({email : user.email },{
     password : password
   })
   sendMail(
