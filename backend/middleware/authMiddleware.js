@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 const requireAuth = (req, res, next) => {
-  const token = req.cookies.jwt;
+  const token = req.body.token;
   console.log(token)
   // check json web token exists & is verified
   if (token) {
@@ -22,7 +22,7 @@ const requireAuth = (req, res, next) => {
 
 // check current user
 const checkUser = (req, res, next) => {
-  const token = req.cookies.jwt;
+  const token = req.body.token;
   if (token) {
     jwt.verify(token, 'esiSwitch', async (err, decodedToken) => {
       if (err) {
@@ -41,7 +41,7 @@ const checkUser = (req, res, next) => {
 };
 
 const isAdmin = (req,res,next)=>{
-  const token = req.cookies.jwt;
+  const token = req.body.token
 
   if (token) {
     jwt.verify(token, 'esiSwitch', async (err, decodedToken) => {

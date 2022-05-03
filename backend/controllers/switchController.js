@@ -6,6 +6,8 @@ const _ = require('lodash')
 const marque = require('../models/marque')
 
 
+
+
 module.exports.modifier_get = async ( req,res)=>{
     const data = await Switch.findById(req.body._id);
     console.log(data);
