@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { requireAuth, checkUser, isAdmin } = require('../middleware/authMiddleware');
 const switchController = require('../controllers/switchController');
+const { append } = require('express/lib/response');
 
 router.get('*', requireAuth);
 router.post('*', requireAuth);

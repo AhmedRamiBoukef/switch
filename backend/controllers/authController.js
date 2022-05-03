@@ -100,7 +100,7 @@ module.exports.login_post = async (req, res) => {
     const deleted = user.deleted ; 
     if (deleted) throw 'ce compte est desactive' ;
     const token = createToken(user.email,user._id,user.role);
-    // res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000,secure:false });
+    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000,secure:false });
     res.status(200).json({ token:token });
   } 
   catch (err) {

@@ -70,7 +70,7 @@ app.get('/getbyid', (req ,res) => {
 })
 
 app.get('/getCurrentUser',requireAuth,(req,res)=>{
-  const token = req.cookies.jwt;
+  const token = req.headers['x-access-token']
   if (token) {
     jwt.verify(token, 'esiSwitch', async (err, decodedToken) => {
       if (err) {
