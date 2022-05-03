@@ -14,6 +14,7 @@ const jwt = require('jsonwebtoken');
 const { pickBy, identity } = require('lodash')
 const { signup_post } = require('./controllers/authController');
 const { use } = require('./routes/authRoutes');
+const helmet = require("helmet");
 
 const dbURI = 'mongodb+srv://EsiSwitch:esi1234@cluster0.h1vs7.mongodb.net/Data?retryWrites=true'
 
@@ -30,6 +31,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
+app.use(helmet());
 app.use(cookieParser());
 app.use('/api',router)
 
@@ -138,7 +140,7 @@ app.post('/forgetPassword',async (req,res)=>
   if(!user)
   {
     res.status(404).send({msg : "ce email n'existe pas "})
-  }
+  } else {
   const crypto = require('crypto')
 
 const generatePassword = (
@@ -161,7 +163,7 @@ const salt = await bcrypt.genSalt();
    "votre nouvelle mot de passe est :"+password1 
   )
   res.send(user1)
-
+  }
 
 });
 module.exports = sendMail ; 
