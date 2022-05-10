@@ -80,7 +80,7 @@ module.exports.signup_post = async (req, res) => {
     sendMail(
       email ,
       "Bienvenue dans EsiSwitch",
-      "Bonjour, \nMaintenant vous pouvez acceder a notre espace ESiSwitch :\nemail: "+email+"\nmot de passe: "+password
+      "Bonjour, \nMaintenant vous pouvez acceder a notre espace EsiSwitch :\nemail: "+email+"\nmot de passe: "+password
     )
   //  res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
     res.status(201).json();
