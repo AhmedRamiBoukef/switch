@@ -139,7 +139,7 @@ app.post('/forgetPassword',async (req,res)=>
   const user = await User.findOne({email : req.body.email})
   if(!user)
   {
-    res.status(404).send({msg : "ce email n'existe pas "})
+    res.send({msg : "ce email n'existe pas "})
   } else {
   const crypto = require('crypto')
 

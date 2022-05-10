@@ -17,7 +17,7 @@ const portSchemas = new mongoose.Schema({
             type: String,
             required: true
         },
-        cscade: {
+        cascade: {
             type: Boolean,
             required: true
         },
