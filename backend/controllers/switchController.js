@@ -153,3 +153,68 @@ module.exports.search_port = async (req ,res) => {
     }
     res.send(data) 
 }
+
+modules.exports.importer = (req,res)=>{
+    const file = req.files.fichier ;
+    const filename = file.name ;
+    console.log(filename);
+    file.mv('./upload/'+filename , (err)=>{
+        if(err){
+            res.send(err);
+        }
+        else
+        {
+            res.send('file upload');
+            const result= exceltojson({
+                sourceFile : './upload/'+filename ,
+                header : {
+                    rows : 3 ,
+                },
+               columnToKey: {
+                    A: 'vide',
+                    B: '{{B3}}',
+                    C: '{{C3}}',
+                    D: '{{D3}}',
+                    E: '{{E3}}',
+                    F: '{{F3}}',
+                    G: '{{G3}}',
+                    H: '{{H3}}',
+                    I: '{{I3}}',
+                    J: '{{J3}}',
+                    K: '{{K3}}',
+                    L: '{{L3}}',
+                    M: '{{M3}}',
+                    // N: '{{N3}}',
+                    // O: '{{O3}}',
+                    // P: '{{P3}}',
+                    // Q: '{{Q3}}',
+       
+                },
+                // la page est : Inventaire Switchs
+            })
+            console.log(result['Inventaire Switchs']);
+            result['Inventaire Switchs'].map(ele => {
+                console.log(ele);
+
+                var s = new Switch({
+                    Bloc:ele.Bloc,
+                    Armoire:ele.Armoire,
+                    Nom:ele.Nom,
+                    Marque:ele.Marque,
+                    Modèle:ele.Modèle,
+                    N_Serie: ele['N° de Série'],
+                    Adresse_IP:ele['Adresse IP'],
+                    N_d_inventaire:ele["N° d'inventaire"],
+                    Adresse_MAC:ele['Adresse MAC'],
+                    Nombre_de_ports_F_E: ele['Nombre de ports F-E'],
+                    Nombre_de_ports_G_E: ele['Nombre de ports G-E'],
+                    Nombre_de_ports_SFP: ele['Nombre de ports SFP'],
+                    Etat: false
+                });
+                s.save()
+            })
+        }
+    });
+   
+ 
+}

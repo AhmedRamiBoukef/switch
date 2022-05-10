@@ -36,6 +36,8 @@ router.post('/getbyid', switchController.getbyid)
 
 router.get('/search/port', switchController.search_port)
 
+router.post('/importe', switchController.importer)
+
 
 
 
