@@ -154,7 +154,7 @@ module.exports.search_port = async (req ,res) => {
     res.send(data) 
 }
 
-modules.exports.importer = (req,res)=>{
+module.exports.importer = (req,res)=>{
     const file = req.files.fichier ;
     const filename = file.name ;
     console.log(filename);
