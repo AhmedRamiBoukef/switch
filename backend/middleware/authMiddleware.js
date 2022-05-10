@@ -49,10 +49,10 @@ const isAdmin = (req,res,next)=>{
         res.locals.user = null;
         next();
       } else {
-        if(decodedToken.isAdmin!==true)
+        if(decodedToken.isAdmin!==0)
         {
           res.status(403).send({
-            isAdmin : false , 
+            role : decodedToken.isAdmin , 
             msg : 'Vous ne pouvez pas acceder '
           })
         }
@@ -75,5 +75,40 @@ const isAdmin = (req,res,next)=>{
 
 }
 
+const isGestionnaire = (req,res,next)=>{
+  const token = req.headers['x-access-token']
 
-module.exports = { requireAuth, checkUser , isAdmin};
+  if (token) {
+    jwt.verify(token, 'esiSwitch', async (err, decodedToken) => {
+      if (err) {
+        res.locals.user = null;
+        next();
+      } else {
+        if(decodedToken.isAdmin!= 1 && decodedToken!= 0)
+        {
+          res.status(403).send({
+            role : decodedToken.isAdmin , 
+            msg : 'Vous ne pouvez pas acceder '
+          })
+           
+        }
+        else{
+          next();
+        }
+      }
+    });
+  } else {
+    res.locals.user = null;
+    next();
+  }
+  /*if (!req.User.role) {
+    return res.status(403).send('You are not admin ');
+    
+  } else {
+    next();
+  }*/
+
+}
+
+
+module.exports = { requireAuth, checkUser , isAdmin, isGestionnaire};

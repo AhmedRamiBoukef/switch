@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
     minlength: [6, 'Minimum password length is 6 characters'],
   }, 
   role : {
-    type : Boolean , // true for admin false for a simple user 
+    type : Number , // true for admin false for a simple user 
     required : [true , 'Please select a role '],
   },
   deleted :{

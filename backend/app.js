@@ -9,6 +9,7 @@ const authRoutes = require('./routes/authRoutes');
 const cookieParser = require('cookie-parser');
 const { requireAuth, checkUser, isAdmin } = require('./middleware/authMiddleware');
 const User = require('./models/User');
+const Local = require('./models/local');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { pickBy, identity } = require('lodash')
@@ -44,6 +45,11 @@ app.get('/getusers',async (req,res)=>{
   res.send(users)
 })
 
+app.get('/local', async (req, res) => {
+  const local =await Local.find()
+  console.log(local);
+  res.send(local)
+})
 
 //create modifier mofier
 // getbyid
@@ -62,6 +68,9 @@ dataUser.role = req.body.role
   res.send("success")
 
 })
+
+// table de salles 
+// utilisateur
 
 
 app.get('/getbyid', (req ,res) => {
