@@ -84,7 +84,7 @@ const isGestionnaire = (req,res,next)=>{
         res.locals.user = null;
         next();
       } else {
-        if(decodedToken.isAdmin!= 1 && decodedToken!= 0)
+        if(decodedToken.isAdmin!= 1 && decodedToken.isAdmin!= 0)
         {
           res.status(403).send({
             role : decodedToken.isAdmin , 
