@@ -53,7 +53,7 @@ app.get('/local', async (req, res) => {
 
 //create modifier mofier
 // getbyid
-app.post("/modifieradmin", (req ,res) => {
+app.post("/modifieradmin", async(req ,res) => {
   const dataUser = pickBy({
     prenom: req.body.prenom,
     name: req.body.name,
@@ -63,7 +63,7 @@ app.post("/modifieradmin", (req ,res) => {
 },identity)
 dataUser.deleted = req.body.deleted
 dataUser.role = req.body.role
-  const user = User.updateOne({_id: req.body._id},dataUser)
+  const user = await User.updateOne({_id: req.body._id},dataUser)
   console.log(user);
   res.send("success")
 
