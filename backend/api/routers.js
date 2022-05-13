@@ -14,7 +14,7 @@ router.get('/ports', switchController.ports_get)
 
 router.get('/port', switchController.port_get)
 
-router.get('/search', switchController.search)
+router.post('/search', switchController.search)
 
 router.post('/getbyid', switchController.getbyid)
 
