@@ -40,12 +40,12 @@ app.use('/api',router)
 
 app.get('*', checkUser);
 app.post('/createuser',signup_post);
-app.get('/getusers',async (req,res)=>{
+app.get('/getusers',,requireAuth,isAdmin, async (req,res)=>{
   const users = await User.find().select(["-password"]); 
   res.send(users)
 })
 
-app.get('/local', async (req, res) => {
+app.get('/local',,requireAuth, async (req, res) => {
   const local =await Local.find()
   console.log(local);
   res.send(local)
@@ -53,7 +53,7 @@ app.get('/local', async (req, res) => {
 
 //create modifier mofier
 // getbyid
-app.post("/modifieradmin", async(req ,res) => {
+app.post("/modifieradmin",,requireAuth,isAdmin, async(req ,res) => {
   const dataUser = pickBy({
     prenom: req.body.prenom,
     name: req.body.name,
@@ -73,7 +73,7 @@ dataUser.role = req.body.role
 // utilisateur
 
 
-app.get('/getbyid', (req ,res) => {
+app.get('/getbyid',,requireAuth, (req ,res) => {
   const user = User.find({_id:req.body._id})
   res.send(user)
 })
@@ -107,7 +107,7 @@ app.post('/active',requireAuth,isAdmin,async (req,res)=>{
   })
   res.send(user)
 })
-app.post('/modifierPassword',async(req,res)=>{
+app.post('/modifierPassword',,requireAuth, async(req,res)=>{
   const salt = await bcrypt.genSalt();
   const password = await bcrypt.hash(req.body.password, salt);
   const user = await User.updateOne({_id : req.body._id },{
