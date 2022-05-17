@@ -36,6 +36,38 @@ app.use(helmet());
 app.use(cookieParser());
 app.use('/api',router)
 
+app.get('/vlans', async (req, res) => {
+  let vlans = await Port.find()
+  const unique = [...new Set(vlans.map(item => item.ip_vlan))]
+  let obj
+  let table = []
+  for (let index = 0; index < unique.length; index++) {
+    let a =await Port.find({ip_vlan:unique[index]}).select('nom_switch')
+    let result = [...new Set(a.map(item => item.nom_switch))]
+
+    obj = {vlan:unique[index],count:result.length}
+    table.push(obj)
+    
+  }
+  res.send(table)
+})
+
+app.get('/type', async (req, res) => {
+  let vlans = await Port.find()
+  const unique = [...new Set(vlans.map(item => item.type))]
+  console.log(unique);
+  let obj
+  let table = []
+  for (let index = 0; index < unique.length; index++) {
+    let a =await Port.find({type:unique[index]}).count()
+
+    obj = {vlan:unique[index],count:a}
+    table.push(obj)
+    
+  }
+  res.send(table)
+})
+
 
 
 app.get('*', checkUser);
