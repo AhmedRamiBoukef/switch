@@ -77,7 +77,7 @@ app.get('/getusers',requireAuth,isAdmin, async (req,res)=>{
   res.send(users)
 })
 
-app.get('/local',,requireAuth, async (req, res) => {
+app.get('/local',requireAuth, async (req, res) => {
   const local =await Local.find()
   console.log(local);
   res.send(local)
