@@ -1,0 +1,127 @@
+[
+    {
+        "nm_port":1,
+        "nom_switch":"Bibliothèque",
+        "ip_vlan":"10.0.1.1",
+        "type":"wifi",
+        "cscade":false,
+        "Cascades_vers_depuis":"",
+        "EtatDePort": "Active",
+        "Entree":true,
+        "Cable":"F_E",
+        "prise":"Bibliothèque"
+        },
+        {
+        "nm_port":2,
+        "nom_switch":"Bibliothèque",
+        "ip_vlan":"0.0.0.0",
+        "type":"nonUtiliser",
+        "cscade":false,
+        "Cascades_vers_depuis":"",
+        "EtatDePort": "NonActive",
+        "Entree":true,
+        "Cable":"F_E",
+        "prise":""
+        },
+        {
+        "nm_port":3,
+        "nom_switch":"Bibliothèque",
+        "ip_vlan":"0.0.0.0",
+        "type":"cruptu",
+        "cscade":false,
+        "Cascades_vers_depuis":"",
+        "EtatDePort": "Active",
+        "Entree":true,
+        "Cable":"F_E",
+        "prise":"Bibliothèque"
+        },
+        
+        {
+        "nm_port":4,
+        "nom_switch":"Bibliothèque",
+        "ip_vlan":"10.0.1.2",
+        "type":"utilise",
+        "cscade":true,
+        "Cascades_vers_depuis":"",
+        "EtatDePort": "Active",
+        "Entree":false,
+        "Cable":"F_E",
+        "prise":"Bibliothèque-Bureau"
+        },
+        {
+        "nm_port":5,
+        "nom_switch":"Bibliothèque",
+        "ip_vlan":"10.0.1.2",
+        "type":"utilise",
+        "cscade":true,
+        "Cascades_vers_depuis":"",
+        "EtatDePort": "Active",
+        "Entree":false,
+        "Cable":"F_E",
+        "prise":"Bibliothèque"
+        },
+        {
+        "nm_port":6,
+        "nom_switch":"Bibliothèque",
+        "ip_vlan":"10.0.1.1",
+        "type":"utilise",
+        "cscade":true,
+        "Cascades_vers_depuis":"",
+        "EtatDePort": "Active",
+        "Entree":true,
+        "Cable":"G_E",
+        "prise":"Bibliothèque-etage1"
+        },
+        {
+        "nm_port":7,
+        "nom_switch":"Bibliothèque",
+        "ip_vlan":"0.0.0.0",
+        "type":"nonutilise",
+        "cscade":false,
+        "Cascades_vers_depuis":"",
+        "EtatDePort": "NonActive",
+        "Entree":true,
+        "Cable":"F_E",
+        "prise":""
+        },
+        {
+        "nm_port":8,
+        "nom_switch":"Bibliothèque",
+        "ip_vlan":"10.0.1.2",
+        "type":"utilise",
+        "cscade":false,
+        "Cascades_vers_depuis":"M3",
+        "EtatDePort": "Active",
+        "Entree":true,
+        "Cable":"F_E",
+        "prise":"M3"
+        },
+        {
+        "nm_port":9,
+        "nom_switch":"Bibliothèque",
+        "ip_vlan":"10.0.1.2",
+        "type":"utiliser",
+        "cscade":true,
+        "Cascades_vers_depuis":"AP",
+        "EtatDePort": "Active",
+        "Entree":true,
+        "Cable":"SFP",
+        "prise":""
+        },
+        {
+        "nm_port":10,
+        "nom_switch":"Bibliothèque",
+        "ip_vlan":"10.0.1.2",
+        "type":"utiliser",
+        "cscade":true,
+        "Cascades_vers_depuis":"DE",
+        "EtatDePort": "Active",
+        "Entree":false,
+        "Cable":"SFP",
+        "prise":""
+        }
+]
+
+
+
+
