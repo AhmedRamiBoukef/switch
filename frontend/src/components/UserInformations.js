@@ -32,7 +32,7 @@ export default function UserInformations({ user , userNameActual }) {
             <SideBar
               image="./../images/image01.png"
               nom={userNameActual}
-              titre="Acceuil"
+              titre="Information Utilisateur"
             />
 
 

@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 
 
 import React from 'react'
-//import image from './switch.png'
+import image from '../images/switch.png'
 import TypeAnimation from 'react-type-animation';
 
 function PremierePage() {
@@ -29,7 +29,7 @@ function PremierePage() {
           </a>
           <nav className="md:ml-auto flex flex-wrap items-center text-base justify-between ">
             {/* <a id="a-propre" className="mr-5 font-bold text-2xl text-indigo-700 hover:text-[#3319E8] cursor-pointer pr-8 hover:underline "><Link to={"/Login"}>Login</Link></a> */}
-            <a className="mr-5 font-bold text-2xl text-indigo-700 hover:text-[#3319E8] cursor-pointer hover:underline"><Link to={"/Aide"}>Aide en ligne</Link></a>
+            {/* <a className="mr-5 font-bold text-2xl text-indigo-700 hover:text-[#3319E8] cursor-pointer hover:underline"><Link to={"/Aide"}>Aide en ligne</Link></a> */}
           </nav>
         </div>
       </header>
@@ -51,13 +51,13 @@ function PremierePage() {
                 />
               </span>
             </h1>
-            <h4 class="mb-8 leading-relaxed ">Copper mug Heirloom echo park mlkshk tote bag selvage hot chicken try-hard chambray.</h4>
+            {/* <h4 class="mb-8 leading-relaxed ">Copper mug Heirloom echo park mlkshk tote bag selvage hot chicken try-hard chambray.</h4> */}
             <div class="flex justify-center ml-5">
               <button class="inline-flex text-white bg-indigo-700 border-0 py-2 px-6 focus:outline-none hover:bg-[#3319E8] shadow-[-8px_15px_30px_-5px_rgba(51,25,232,1)] hover:shadow-[-5px_15px_30px_-10px_rgba(51,25,232,1)] rounded-lg text-lg cursor-pointer font-mono tracking-widest font-extrabold hover:-translate-y-1 hover:scale-110 transition duration-300"><Link to={"/Login"}>Connecter</Link></button>
             </div>
           </div>
           <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 md:items-center">
-            {/* <img class="object-cover object-center rounded" alt="hero" src={image} /> */}
+            <img class="object-cover object-center rounded" alt="hero" src={image} />
 
           </div>
         </div>
@@ -66,8 +66,8 @@ function PremierePage() {
 
 
       <footer className=' w-full h-max body-font flex flex-wrap  md:flex-row text-center justify-center '>
-        <p className='text-sm'>Developé par ESI Team
-          <br /><p>Copyright © 2022 - imagecolorpicker.com | V: m5ZpctxKF0YYWSKn230ra | Privacy Policy|Imprint</p>
+        <p className='text-sm'>Developé par l'équipe 12 2022
+          <br /><p>- Copyright © 2022 - </p>
         </p>
       </footer>
 

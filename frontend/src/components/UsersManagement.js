@@ -232,7 +232,7 @@ function UsersManagement({
             <SideBar
               image="./../images/image01.png"
               nom={userNameActual}
-              titre="Acceuil"
+              titre="Utilisateurs"
             />
 
             <div className="p-6">

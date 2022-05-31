@@ -6,7 +6,12 @@ import {
   Search,
   Add,
   Help,
+  Lock,
+  BarChart,
   ExpandLess,
+  AccountCircle,
+  PeopleAlt,
+  PersonAdd,
   ExpandMore,
   ChangeHistory,
   History,
@@ -88,12 +93,13 @@ export default function Navbar(props) {
           <ul className={`${user}  text-lg `}>
             <li className="pl-8 hover:scale-105 hover:text-red-600">
               {" "}
-              <Link to={'/CreateUser'}> - ajouter</Link> 
+              <PersonAdd></PersonAdd>
+              <Link to={'/CreateUser'}>  ajouter</Link> 
             </li>
             <li className="pl-8 hover:scale-105 hover:text-red-600">
               {" "}
-
-             <Link to={'/UsersMangement'}>-Lister</Link>
+              <PeopleAlt></PeopleAlt>
+             <Link to={'/UsersMangement'}> Lister</Link>
             </li>
           </ul>
           }
@@ -113,12 +119,12 @@ export default function Navbar(props) {
             }
 
             <h2 className="text-xl hover:scale-105 lg:hover:scale-110 hover:bg-slate-200 hover:text-black hover:duration-300">
-              <span className="mr-2">{<History />}</span>
+              <span className="mr-2">{<AccountCircle />}</span>
              <Link to={'/ProfilePersonnel'}>Profile Personnel</Link>
             </h2>
             
             <h2 className="text-xl hover:scale-105 lg:hover:scale-110 hover:bg-slate-200 hover:text-black hover:duration-300">
-              <span className="mr-2">{<History />}</span>
+              <span className="mr-2">{<BarChart />}</span>
              <Link to={'/Statistic'}>Statistiques</Link>
             </h2>
 
@@ -130,7 +136,7 @@ export default function Navbar(props) {
               <span className="mr-2">{<Help />}</span> */}
             <button onClick={()=>{Cookies.remove("jwt") ;document.location.reload()}}>
             <h2 className="text-xl hover:scale-105 lg:hover:scale-110 hover:bg-slate-200 hover:text-black hover:duration-300">
-              <span className="mr-2">{<Help />}</span> Deconnexion
+              <span className="mr-2">{<Lock />}</span> Deconnexion
               </h2>
              </button>
              

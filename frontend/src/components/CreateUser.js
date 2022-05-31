@@ -201,7 +201,7 @@ function CreateUser({userNameActual}) {
             <SideBar
               image="./../images/image01.png"
               nom={userNameActual}
-              titre="Acceuil"
+              titre="Ajouter Utilisateur"
             />
                    <div className="border-2 rounded-xl  m-auto lg:w-1/2 sm:w-2/3 pl-4 pr-8 py-4 text-2xl mt-14">
       <h1 className="text-3xl text-black font-semibold mb-4 text-left">
