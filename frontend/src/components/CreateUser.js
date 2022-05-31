@@ -15,13 +15,7 @@ import { Link } from "react-router-dom";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import Navbar from "./Navbar";
 import SideBar from "./SideBar";
-// interface State {
-//   amount: string;
-//   password: string;
-//   weight: string;
-//   weightRange: string;
-//   showPassword: boolean;
-// }
+
 
 function CreateUser({userNameActual}) {
   const handleMouseConfirmedPassword = () => {
@@ -60,7 +54,7 @@ function CreateUser({userNameActual}) {
     delete: false,
     role: 2,
   };
-  const envoyer = () => {
+   const  envoyer  = async () => {
     informations.name = values.firstName;
     informations.prenom = values.lastName;
     informations.email = values.email;
@@ -68,7 +62,7 @@ function CreateUser({userNameActual}) {
     informations.password = values.password;
     informations.phone = values.phone;
     informations.role = values.role;
-    if (
+     if (
       informations.name != "" &&
       informations.prenom != "" &&
       informations.email != "" &&
@@ -80,7 +74,7 @@ function CreateUser({userNameActual}) {
       messageErrorPassword == "" &&
       messageErrorPhone == ""
     ) {
-      fetch("http://localhost:5000/createuser", {
+     await fetch("http://localhost:5000/createuser", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(informations), //'62555a53eb287372cf3ffdaa'
@@ -90,6 +84,7 @@ function CreateUser({userNameActual}) {
         })
         .then((data) => {
           console.log("Ramiiiiiiiiiiiiiii", data);
+          document.location.reload();
         });
     } else {
       alert(
@@ -346,7 +341,7 @@ function CreateUser({userNameActual}) {
                 id="outlined-adornment-phone"
                 value={values.phone}
                 onChange={handleChange("phone")}
-                // startAdornment={<InputAdornment position="start">$</InputAdornment>}
+               
                 label="Numero de téléphone"
               />
             </FormControl>
@@ -354,8 +349,9 @@ function CreateUser({userNameActual}) {
           </div>
         </div>
       </div>
-      {/* <div className="">//mt-4  grid grid-cols-3 space-x-10 */}
+
       <div className="flex justify-between mt-8">
+        <Link to={"/UsersMangement"}>
         <button
           type="submit"
           className="border text-xl text-white p-3 bg-blue-700 hover:outline-none hover:ring-2 hover:bg-blue-500 rounded-xl hover:shadow-xl hover:ring-violet-800 hover:scale-105"
@@ -363,9 +359,9 @@ function CreateUser({userNameActual}) {
         >
           Ajouter
         </button>
+        </Link>
         <div className="space-x-2 w-2/3 -px-4 ">
-          {/* <input type="checkbox" id="role" onChange={handleAdmin} />
-            <label htmlFor="role">Admin</label> */}
+       
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">
               Type utilisateur
@@ -381,7 +377,6 @@ function CreateUser({userNameActual}) {
               <MenuItem value={1}>gestionnaire</MenuItem>
               <MenuItem value={2}>simple utilisteur</MenuItem>
 
-              {/* <MenuItem value={false} onClick={setTypeUser02(0)}></MenuItem> */}
             </Select>
           </FormControl>
         </div>
@@ -403,208 +398,6 @@ function CreateUser({userNameActual}) {
     </div>
 
 
-
-
-
-
-
-
-
-
-
-/*
-    <div className="border-2 rounded-xl  m-auto lg:w-1/2 sm:w-2/3 pl-4 pr-8 py-4 text-2xl mt-14">
-      <h1 className="text-3xl text-black font-semibold mb-4 text-left">
-        Ajouter un nouveau utilisateur
-      </h1>
-      <div className="space-y-6">
-        <div className="grid grid-cols-2 gap-x-10 ">
-          <div>
-            <FormControl fullWidth sx={{ m: 1 }}>
-              <InputLabel htmlFor="outlined-adornment-firstName">
-                Nom{" "}
-              </InputLabel>
-              <OutlinedInput
-                required
-                id="outlined-adornment-firstName"
-                value={values.firstName}
-                onChange={handleChange("firstName")}
-                // startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                label="Nom"
-              />
-            </FormControl>
-          </div>
-          <div>
-            <FormControl fullWidth sx={{ m: 1 }}>
-              <InputLabel htmlFor="outlined-adornment-lastName">
-                Prenom{" "}
-              </InputLabel>
-              <OutlinedInput
-                required
-                id="outlined-adornment-lastName"
-                value={values.lastName}
-                onChange={handleChange("lastName")}
-                // startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                label="Prenom"
-              />
-            </FormControl>
-          </div>
-        </div>
-        <div>
-          <FormControl fullWidth sx={{ m: 1 }}>
-            <InputLabel htmlFor="outlined-adornment-occupation">
-              Poste de travaille{" "}
-            </InputLabel>
-            <OutlinedInput
-              required
-              id="outlined-adornment-occupation"
-              value={values.occupation}
-              onChange={handleChange("occupation")}
-              // startAdornment={<InputAdornment position="start">$</InputAdornment>}
-              label="Poste de travaille"
-            />
-          </FormControl>
-          <p></p>
-        </div>
-        <div className="grid grid-cols-2 gap-x-10 gap-y-6">
-          <div>
-            <FormControl variant="outlined" fullWidth sx={{ m: 1 }}>
-              <InputLabel htmlFor="outlined-adornment-password">
-                Password
-              </InputLabel>
-              <OutlinedInput
-                required
-                id="outlined-adornment-password"
-                type={values.showPassword ? "text" : "password"}
-                value={values.password}
-                onChange={handleChange("password")}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {values.showPassword ? <FaEyeSlash /> : <FaEye />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                label="Password"
-              />
-            </FormControl>
-            <p className="text-red-500 text-sm ">{messageErrorPassword}</p>
-          </div>
-          <div>
-            <FormControl variant="outlined" fullWidth sx={{ m: 1 }}>
-              <InputLabel htmlFor="outlined-adornment-confirmedPassword">
-                Confirmed Password
-              </InputLabel>
-              <OutlinedInput
-                required
-                id="outlined-adornment-confirmedPassword"
-                type={values.showConfirmedPassword ? "text" : "password"}
-                value={values.ConfirmedPassword}
-                onChange={handleChange("confirmedPassword")}
-                onBlur={handleMouseConfirmedPassword}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowConfirmedPassword}
-                      onMouseDown={handleMouseDownConfirmedPassword}
-                      edge="end"
-                    >
-                      {values.showConfirmedPassword ? (
-                        <FaEyeSlash />
-                      ) : (
-                        <FaEye />
-                      )}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                label="confirmed Password"
-              />
-            </FormControl>
-            <p className="text-red-500 text-sm ">
-              {messageErrorConfirmedPassword}
-            </p>
-          </div>
-
-          <div>
-            <FormControl fullWidth sx={{ m: 1 }}>
-              <InputLabel htmlFor="outlined-adornment-email">
-                E-mail{" "}
-              </InputLabel>
-              <OutlinedInput
-                required
-                id="outlined-adornment-email"
-                value={values.email}
-                onChange={handleChange("email")}
-                // startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                label="E-mail"
-              />
-            </FormControl>
-            <p className="text-red-500 text-sm ">{messageErrorMail}</p>
-          </div>
-          <div>
-            <FormControl fullWidth sx={{ m: 1 }}>
-              <InputLabel htmlFor="outlined-adornment-phone" color="success">
-                Numero de téléphone{" "}
-              </InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-phone"
-                value={values.phone}
-                onChange={handleChange("phone")}
-                // startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                label="Numero de téléphone"
-              />
-            </FormControl>
-            <p className="text-red-500 text-sm ">{messageErrorPhone}</p>
-          </div>
-        </div>
-      </div>
-     
-      <div className="flex justify-between mt-10">
-        <button
-          type="submit"
-          className="border text-xl text-white p-3 bg-blue-700 hover:outline-none hover:ring-2 hover:bg-blue-500 rounded-xl hover:shadow-xl hover:ring-violet-800 hover:scale-105"
-          onClick={envoyer}
-        >
-          Ajouter
-        </button>
-        <div className="space-x-2 w-2/3 -px-4 ">
-         
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">
-              Type utilisateur
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={values.role}
-              label="Type utilisateur"
-              onChange={handleChange("role")}
-            >
-              <MenuItem value={0}>Admin</MenuItem>
-              <MenuItem value={1}>gestionnaire</MenuItem>
-              <MenuItem value={2}>simple utilisteur</MenuItem>
-
-             
-            </Select>
-          </FormControl>
-        </div>
-        <div className="space-x-0 self-center">
-          <input type="checkbox" id="delete" onChange={handleDelete} />
-          <label htmlFor="delete">Activer</label>
-        </div>
-
-        
-      </div>
-      <button className="text-white text-xl  bg-slate-900 p-3 self-center hover:bg-slate-800 hover:scale-105 rounded-md right-8 mt-12 absolute right-0 top-0  mr-4">
-        <Link to={"/Login"}>Retour </Link>
-      </button>
-    </div>*/
   );
 }
 

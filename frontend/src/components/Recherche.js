@@ -17,9 +17,6 @@ export default function Recherche({
   setSwitches,
   lesSwitches,
 }) {
-  // const [lesSwitches , setLesSwitches] = useState([]) ;
-  // setLesSwitches(switches) ;
-
   console.log("tableau de lesSwitches", switches);
   console.log("tableau de ports", ports);
   const unique = [...new Set(switches.map((option) => option.Marque))];
@@ -61,19 +58,6 @@ export default function Recherche({
         console.log(data);
         setSwitches(data);
       });
-
-    // fetch("http://localhost:5000/api/search", {
-    //   method: "POST",
-    //   headers: { "content-type": "application/json" },
-    //   body: JSON.stringify(swi), //'62555a53eb287372cf3ffdaa'
-    // })
-    //   .then((res) => {
-    //     return res.json();
-    //   })
-    //   .then((data) => {
-    //     console.log("Ramiiiiiiiiiiiiiii", data);
-    //     setSwitches(data) ;
-    //   });
   };
 
   const [icone, setIcone] = useState(<FaArrowDown />);
@@ -138,11 +122,9 @@ export default function Recherche({
     port: [],
   });
   return (
-    // <div className="  text-black m-3  rounded-2xl py-8 px-8 shadow-md shadow-slate-500 bg-gradient-to-r from-cyan-500 to-blue-500">
     <div className="  text-black m-3  rounded-2xl py-8 px-8 ">
       <div className="  text-black m-3  rounded-2xl py-8 px-8 shadow-md shadow-slate-500  bg-white  ">
         {" "}
-        {/* //bg-gradient-to-b from-blue-300 to-blue-400 */}
         <h1 className="text-2xl lg:text-4xl">Rechercher un switch </h1>
         <div className="flex justify-between mt-4">
           <div className="lg:w-1/3 sm:w-1/2">
@@ -231,21 +213,6 @@ export default function Recherche({
               />
             </div>
             <div className="   ">
-              {/* <Autocomplete
-                id="free-solo-demo"
-                freeSolo
-                options={switches.map((option) => option.Adresse_MAC)}
-                renderInput={(params) => (
-                  <TextField {...params} label="Adresse MAC" />
-                )}
-                onInputChange={(event, newInputValue) => {
-                  console.log(newInputValue);
-                  setAdresse_MAC(newInputValue);
-                }}
-                onChange={(event, newValue) => {
-                  setAdresse_MAC(newValue);
-                }}
-              /> */}
               <Autocomplete
                 id="free-solo"
                 freeSolo
@@ -261,25 +228,6 @@ export default function Recherche({
                   setMarque(newValue);
                 }}
               />
-              {/* <Box sx={{ minWidth: 120 }}>
-
-                <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Marques</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={age}
-                    label="Marques"
-                    onChange={(e) => setMarque(e.target.value)}
-                  >
-                   { 
-                   <MenuItem value={10}>cisco</MenuItem>
-                    <MenuItem value={20}>cisco2</MenuItem>
-                    <MenuItem value={30}>cisco3</MenuItem>
-                    }
-                  </Select>
-                </FormControl> 
-              </Box> */}
             </div>
             <div className="   ">
               <Autocomplete
@@ -315,7 +263,6 @@ export default function Recherche({
                   setBloc(newValue);
                 }}
               />
-              {/* </Stack> */}
             </div>
             <div className="  ">
               <Autocomplete
@@ -340,5 +287,3 @@ export default function Recherche({
     </div>
   );
 }
-
-//

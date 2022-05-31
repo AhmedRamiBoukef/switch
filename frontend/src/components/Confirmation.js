@@ -104,12 +104,14 @@ const Confirmation = (props) => {
           </h1>
         </div> */}
         <div className="flex justify-end">
+          <Link to={"/Login"}>
           <button
             className="mt-4 mr-4 hover:bg-blue-800 bg-blue-700 px-4 py-2 border rounded-lg text-white font-bold mb-4 "
             onClick={Sauvegarder}
           >
             Confirmer
           </button>
+          </Link>
           <Link to="/Login">
             <button className="mt-4 mr-4 hover:bg-blue-800 bg-blue-700 px-4 py-2 border rounded-lg text-white font-bold mb-4">
               Annuler

@@ -45,6 +45,13 @@ export default function Navbar(props) {
        setUser2(data) ;   
      })
   },[])
+
+ async function deconnexion()
+ {
+ await Cookies.remove("jwt") ;
+ await document.location.reload()
+  
+ }
   return (
     <div
       style={{ height: "100vh" }}
@@ -134,11 +141,13 @@ export default function Navbar(props) {
             </h2>
             {/* <h2 className="text-xl hover:scale-105 lg:hover:scale-110 hover:bg-slate-200 hover:text-black hover:duration-300">
               <span className="mr-2">{<Help />}</span> */}
-            <button onClick={()=>{Cookies.remove("jwt") ;document.location.reload()}}>
+              <Link to={"/Login"}>
+            <button onClick={()=>{deconnexion()}}>
             <h2 className="text-xl hover:scale-105 lg:hover:scale-110 hover:bg-slate-200 hover:text-black hover:duration-300">
               <span className="mr-2">{<Lock />}</span> Deconnexion
               </h2>
              </button>
+             </Link>
              
             
             {/* <h2 className="text-xl hover:scale-105 lg:hover:scale-110 hover:bg-slate-200 hover:duration-300 hover:text-black">
