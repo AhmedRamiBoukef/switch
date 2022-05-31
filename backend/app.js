@@ -79,12 +79,10 @@ app.get('/getusers',requireAuth,isAdmin, async (req,res)=>{
 
 app.get('/local',requireAuth, async (req, res) => {
   const local =await Local.find()
-  console.log(local);
   res.send(local)
 })
 
-//create modifier mofier
-// getbyid
+
 app.post("/modifieradmin",requireAuth,isAdmin, async(req ,res) => {
   const dataUser = pickBy({
     prenom: req.body.prenom,
@@ -96,13 +94,10 @@ app.post("/modifieradmin",requireAuth,isAdmin, async(req ,res) => {
 dataUser.deleted = req.body.deleted
 dataUser.role = req.body.role
   const user = await User.updateOne({_id: req.body._id},dataUser)
-  console.log(user);
   res.send("success")
 
 })
 
-// table de salles 
-// utilisateur
 
 
 app.get('/getbyid',requireAuth, (req ,res) => {

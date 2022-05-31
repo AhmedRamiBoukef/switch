@@ -10,7 +10,6 @@ const marque = require('../models/marque')
 
 module.exports.modifier_get = async ( req,res)=>{
     const data = await Switch.findById(req.body._id);
-    console.log(data);
     const dataport = await Port.find({nom_switch : data.Nom}).sort({"nm_port":1});
     res.json({
         switch : data , 
@@ -20,7 +19,6 @@ module.exports.modifier_get = async ( req,res)=>{
 
 module.exports.marque = async ( req,res)=>{
     const data = await marque.find();
-    console.log(data);
     res.send(data);
 }
 
@@ -47,14 +45,12 @@ module.exports.modifier_put = async (req ,res) => {
 
     for (let i = 0;i<req.body.length;i++) {
         const mod = await Port.updateOne({_id:req.body[i]._id},req.body[i])
-        console.log(req.body[i]);
     }
     res.json(true)
 }
 
 module.exports.switch_get = async (req, res) => {
     const data = await Switch.find()
-    console.log(data);
     res.send(data)
 }
 
@@ -123,10 +119,8 @@ module.exports.search = async (req, res) => {
 
 
 module.exports.getbyid = async (req ,res) => {
-    console.log(req.body);
     const elem = await Switch.findById(req.body._id)
     const ports = await Port.find({ nom_switch: elem.Nom }).sort({"nm_port":1})
-    console.log(elem,ports);
     res.send({
         switch: elem,
         ports: ports
@@ -157,7 +151,6 @@ module.exports.search_port = async (req ,res) => {
 module.exports.importer = (req,res)=>{
     const file = req.files.fichier ;
     const filename = file.name ;
-    console.log(filename);
     file.mv('./upload/'+filename , (err)=>{
         if(err){
             res.send(err);
@@ -184,17 +177,12 @@ module.exports.importer = (req,res)=>{
                     K: '{{K3}}',
                     L: '{{L3}}',
                     M: '{{M3}}',
-                    // N: '{{N3}}',
-                    // O: '{{O3}}',
-                    // P: '{{P3}}',
-                    // Q: '{{Q3}}',
        
                 },
                 // la page est : Inventaire Switchs
             })
             console.log(result['Inventaire Switchs']);
             result['Inventaire Switchs'].map(ele => {
-                console.log(ele);
 
                 var s = new Switch({
                     Bloc:ele.Bloc,
