@@ -2,9 +2,9 @@ import { tab } from "@testing-library/user-event/dist/tab";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import Navbar from "./Navbar";
-import {  Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import SideBar from "./SideBar";
-import Image from '../images/forgotpasswordback.jpg'
+import Image from "../images/forgotpasswordback.jpg";
 const Modifier = (props) => {
   // console.log(props.Switch) ;
   const [ports, setPorts] = useState(false); //when it's true thats mean that we show the table of ports to modifie else we show the table of (nom d'inventaire etc...)
@@ -30,43 +30,42 @@ const Modifier = (props) => {
   const [Nombre_de_ports_SFP, setNombre_de_ports_SFP] = useState(
     props.Switch.Nombre_de_ports_SFP
   );
-  
 
   const [loadsubmitDet, setLoadsubmitDet] = useState(false);
   const [loadingSauvegarder, setLoadingSauvegarder] = useState(false);
   const [confirmer, setConfirmer] = useState(false);
   const [confirmerone, setConfirmerOne] = useState(false);
-  const [loadsubmitDetTwo,setLoadsubmitDetTwo]=useState(false) ;
-  const [terminerSubmit,setTerminerSubmit]=useState(false) ;
-  const [terminerSauvegarde,setTerminerSauvegarde]=useState(false) ;
-  const [locals,setLocals]=useState([]) ;
-  useEffect(()=>{
+  const [loadsubmitDetTwo, setLoadsubmitDetTwo] = useState(false);
+  const [terminerSubmit, setTerminerSubmit] = useState(false);
+  const [terminerSauvegarde, setTerminerSauvegarde] = useState(false);
+  const [locals, setLocals] = useState([]);
+  useEffect(() => {
     let headersList = {
-      "Accept": "*/*",
+      Accept: "*/*",
       "User-Agent": "Thunder Client (https://www.thunderclient.com)",
       "x-access-token": Cookies.get("jwt"),
-      "Content-Type": "application/json"
-     }
-     
-    
-     
-//  fetch("http://localhost:5000/api/port", { 
-//        method: "GET",
-//        headers: headersList
+      "Content-Type": "application/json",
+    };
 
-    console.log("les locales") ;
-      fetch("http://localhost:5000/local",{
+    //  fetch("http://localhost:5000/api/port", {
+    //        method: "GET",
+    //        headers: headersList
+
+    console.log("les locales");
+    fetch("http://localhost:5000/local", {
       method: "GET",
-      headers: headersList}
-      ).then(function(response) {
-      return response.json();
-     }).then(function(data) {
-       console.log("les locales") ;
-      console.log(data);
-      setLocals(data) ;
-      console.log("==========") ;
+      headers: headersList,
     })
-  },[])
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        console.log("les locales");
+        console.log(data);
+        setLocals(data);
+        console.log("==========");
+      });
+  }, []);
 
   //show the loading when we save the modification of n_inventaire etcc...
 
@@ -101,8 +100,7 @@ const Modifier = (props) => {
         console.log("submitdet");
         setTablePorts(data);
         setLoadsubmitDet(false);
-         setPorts(true);
-         
+        setPorts(true);
       });
   }
   function submitDetTwo() {
@@ -135,17 +133,17 @@ const Modifier = (props) => {
       .then((data) => {
         // console.log(switcher);
         console.log("submitdettwo");
-        console.log(data) ;
+        console.log(data);
         // setTablePorts(data);
-        setTerminerSubmit(true)
+        setTerminerSubmit(true);
         setTimeout(() => {
-          // 
-          setTerminerSubmit(false) ;
+          //
+          setTerminerSubmit(false);
           setConfirmerOne(false);
         }, 4000);
 
         setLoadsubmitDetTwo(false);
-        
+
         //  setPorts(true);
       });
   }
@@ -223,185 +221,183 @@ const Modifier = (props) => {
         // console.log(data);
         setConfirmer(false);
         setLoadingSauvegarder(false);
-        setTerminerSauvegarde(true) ;
+        setTerminerSauvegarde(true);
       });
   }
 
-
   return (
     /********************the form where the user will write the name of switch etc.... */
-    <div style={{ height: "100vh",backgroundImage: `url(${Image})` }} className="flex w-full bg-cover  ">
+    <div
+      style={{ height: "100vh", backgroundImage: `url(${Image})` }}
+      className="flex w-full bg-cover  "
+    >
       <Navbar></Navbar>
-      <div  className="scrollbar overflow-auto   w-full">
-     
-                {/* <div  className=" mt-4  scrollbar  w-full"> */}
+      <div className="scrollbar overflow-auto   w-full">
+        {/* <div  className=" mt-4  scrollbar  w-full"> */}
         {!ports && (
-          
           <div className="  text-black text-xl w-full bg-cover ">
-             <SideBar
-                  image="./../images/image01.png"
-                  nom="Refisse Youcef "
-                  titre="Modifer les caracterisqtue de Switch"
-                />
+            <SideBar
+              image="./../images/image01.png"
+              nom="Refisse Youcef "
+              titre="Modifer les caracterisqtue de Switch"
+            />
             {confirmerone ? (
-                    <div className="w-full flex justify-center">
-                      {" "}
-                      {!terminerSubmit?
-                      <div className=" rounded-lg shadow-lg shadow-gray-500 p-2 flex flex-col justify-between h-32 md:w-2/5 lg:w-1/5 ">
-                        <h1 className="font-bold text-xl text-center ">
-                          Vous êtes sûr de sauvegarder ?
-                        </h1>
-                        <div className="w-full flex justify-between">
-                          <button
-                            onClick={() => {
-                              submitDetTwo() ;
-                              // setConfirmerOne(false);
-                            }}
-                            className=" bg-green-600 hover:bg-green-700 px-3 py-2  rounded-md sm:text-xl font-bold text-white"
-                          >
-                            {!loadsubmitDetTwo ? (
-                              <h3>confirmer</h3>
-                            ) : (
-                              <div class="loadingio-spinner-spin-guwuy00vjh">
-                                <div class="ldio-kp6g3e7ejdo">
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                  <div>
-                                    <div></div>
-                                  </div>
-                                </div>
-                              </div>
-                            )}
-                          </button>
-                          <button
-                            onClick={() => {
-                              setConfirmerOne(false);
-                            }}
-                            className=" bg-red-600 hover:bg-red-700 px-3 py-2  rounded-md sm:text-xl font-bold text-white"
-                          >
-                            annuler
-                          </button>
-                        </div>
-                      </div>:
-                      <div className=" rounded-lg shadow-lg shadow-gray-500 p-2 flex flex-col justify-center items-center h-32 md:w-2/5 lg:w-1/5 ">
-                      
-                       <h1 className="font-bold text-3xl text-green-500 text-center ">
-                       sauvegarde terminer
-                      </h1>
-                   
-                    </div>
-                      }{" "}
-                    </div>
-                  ) : (
-                    <div className="flex justify-end">
+              <div className="w-full flex justify-center">
+                {" "}
+                {!terminerSubmit ? (
+                  <div className=" rounded-lg shadow-lg shadow-gray-500 p-2 flex flex-col justify-between h-32 md:w-2/5 lg:w-1/5 ">
+                    <h1 className="font-bold text-xl text-center ">
+                      Vous êtes sûr de sauvegarder ?
+                    </h1>
+                    <div className="w-full flex justify-between">
                       <button
                         onClick={() => {
-                          setConfirmerOne(true);
+                          submitDetTwo();
+                          // setConfirmerOne(false);
                         }}
-                        className=" bg-blue-600 hover:bg-blue-700 px-3 py-2  rounded-md sm:text-xl font-bold text-white"
+                        className=" bg-green-600 hover:bg-green-700 px-3 py-2  rounded-md sm:text-xl font-bold text-white"
                       >
-                        sauvegarder
+                        {!loadsubmitDetTwo ? (
+                          <h3>confirmer</h3>
+                        ) : (
+                          <div class="loadingio-spinner-spin-guwuy00vjh">
+                            <div class="ldio-kp6g3e7ejdo">
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                              <div>
+                                <div></div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </button>
+                      <button
+                        onClick={() => {
+                          setConfirmerOne(false);
+                        }}
+                        className=" bg-red-600 hover:bg-red-700 px-3 py-2  rounded-md sm:text-xl font-bold text-white"
+                      >
+                        annuler
                       </button>
                     </div>
-                  )}
-
+                  </div>
+                ) : (
+                  <div className=" rounded-lg shadow-lg shadow-gray-500 p-2 flex flex-col justify-center items-center h-32 md:w-2/5 lg:w-1/5 ">
+                    <h1 className="font-bold text-3xl text-green-500 text-center ">
+                      sauvegarde terminer
+                    </h1>
+                  </div>
+                )}{" "}
+              </div>
+            ) : (
+              <div className="flex justify-end">
+                <button
+                  onClick={() => {
+                    setConfirmerOne(true);
+                  }}
+                  className=" bg-blue-600 hover:bg-blue-700 px-3 py-2  rounded-md sm:text-xl font-bold text-white"
+                >
+                  sauvegarder
+                </button>
+              </div>
+            )}
 
             {/* <div className="flex  justify-end space-x-8 lg:space-x-12 p-6">
               <button className="  hover:bg-blue-700   hover:shadow-sm hover:shadow-blue-500 px-3  py-2 bg-blue-600 rounded-xl sm:text-xl  font-bold text-white">
@@ -412,8 +408,8 @@ const Modifier = (props) => {
               </button>
             </div> */}
 
-            <form className="sm:w-full lg:w-2/3 mx-auto  lg:my-5 my-2 rounded-2xl shadow-xl shadow-slate-300  lg:p-10 px-5 py-3 bg-blue-200 ">
-              <div className="grid grid-cols-2 lg:gap-y-10 lg:gap-x-28 gap-10">
+            <form className="sm:w-full lg:w-5/6 mx-auto  lg:my-5 my-2 rounded-2xl shadow-xl shadow-slate-300  lg:p-10 px-5 py-3 bg-blue-200 ">
+              <div className="grid grid-cols-4 lg:gap-y-10 lg:gap-x-8 gap-10">
                 <div>
                   <label> Bloc </label>
                   <input
@@ -425,15 +421,14 @@ const Modifier = (props) => {
                     className="block  rounded-md w-full p-2"
                     onChange={(e) => setBloc(e.target.value)}
                   ></input>
-                  {locals.length!=0 &&
-
-                  <datalist id="nomswitchs">
-                    {locals.map((elem)=>(
-                      //<option value={"hello"}></option>
-                       <option key={elem.id} value={elem.local}></option>
-                    ))}
-                  </datalist>
-                  }
+                  {locals.length != 0 && (
+                    <datalist id="nomswitchs">
+                      {locals.map((elem) => (
+                        //<option value={"hello"}></option>
+                        <option key={elem.id} value={elem.local}></option>
+                      ))}
+                    </datalist>
+                  )}
                 </div>
                 <div>
                   <label> Armoire </label>
@@ -698,12 +693,12 @@ const Modifier = (props) => {
 
         {ports && (
           <div className="scrollbar overflow-auto w-full ">
-            <div  className="bg-cover w-full  ">
-            <SideBar
-                  image="./../images/image01.png"
-                  nom="Refisse Youcef "
-                  titre="Modifer les ports de switch"
-                />
+            <div className="bg-cover w-full  ">
+              <SideBar
+                image="./../images/image01.png"
+                nom="Refisse Youcef "
+                titre="Modifer les ports de switch"
+              />
               <div className="table w-full p-2 m-2 bg-white shadow-md  shadow-gray-500/75 border border-gary-400 rounded-xl  h-1/2">
                 <div className="  scrollbar overflow-auto  shadow-md  shadow-gray-500/75   border border-gary-400 rounded-xl ">
                   {confirmer ? (
@@ -717,7 +712,6 @@ const Modifier = (props) => {
                           <button
                             onClick={() => {
                               sauvegarder();
-                              
                             }}
                             className=" bg-green-600 hover:bg-green-700 px-3 py-2  rounded-md sm:text-xl font-bold text-white"
                           >
@@ -845,23 +839,25 @@ const Modifier = (props) => {
                     </div>
                   ) : (
                     <div className="flex justify-end">
-                      {!terminerSauvegarde ? 
-                      <button
-                        onClick={() => {
-                          setConfirmer(true);
-                        }}
-                        className=" bg-blue-600 hover:bg-blue-700 px-3 py-2  rounded-md sm:text-xl font-bold text-white"
-                      >
-                        sauvegarder
-                      </button>
-                      :
-                      <button
-                        onClick={()=>{document.location.reload()}}
-                      className=" bg-blue-600 hover:bg-blue-700 px-3 py-2  rounded-md sm:text-xl font-bold text-white"
-                    >
-                     Aller a l'Acceuil
-                    </button>
-                      }
+                      {!terminerSauvegarde ? (
+                        <button
+                          onClick={() => {
+                            setConfirmer(true);
+                          }}
+                          className=" bg-blue-600 hover:bg-blue-700 px-3 py-2  rounded-md sm:text-xl font-bold text-white"
+                        >
+                          sauvegarder
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => {
+                            document.location.reload();
+                          }}
+                          className=" bg-blue-600 hover:bg-blue-700 px-3 py-2  rounded-md sm:text-xl font-bold text-white"
+                        >
+                          Aller a l'Acceuil
+                        </button>
+                      )}
                     </div>
                   )}
                   <table className="w-full border-gray-300  border-solid">
@@ -987,27 +983,28 @@ const Modifier = (props) => {
                               type="text"
                               className="px-2 py-1 w-full border rounded-full"
                             /> */}
-                              
-                  <input
-                    value={elem.prise}
-                    type="text"
-                    id="nomswitch"
-                    name="nomswitch"
-                    list="nomswitchs"
-                    className="block  rounded-md w-full p-2"
-                    onChange={(e) => {
-                      change_Prise(e, index);
-                    }}
-                  ></input>
-                  {locals.length!=0 &&
-                  
-                  <datalist id="nomswitchs">
-                    {locals.map((elem)=>(
-                      //<option value={"hello"}></option>
-                       <option key={elem.id} value={elem.local}></option>
-                    ))}
-                  </datalist>
-                  }
+                            <input
+                              value={elem.prise}
+                              type="text"
+                              id="nomswitch"
+                              name="nomswitch"
+                              list="nomswitchs"
+                              className="block  rounded-md w-full p-2"
+                              onChange={(e) => {
+                                change_Prise(e, index);
+                              }}
+                            ></input>
+                            {locals.length != 0 && (
+                              <datalist id="nomswitchs">
+                                {locals.map((elem) => (
+                                  //<option value={"hello"}></option>
+                                  <option
+                                    key={elem.id}
+                                    value={elem.local}
+                                  ></option>
+                                ))}
+                              </datalist>
+                            )}
                           </td>
                           <td className="  text-center  py-1  px-2">
                             <select
@@ -1077,7 +1074,7 @@ const Modifier = (props) => {
           </div>
         )}
         {/* </div> */}
-        </div>
+      </div>
     </div>
   );
 };

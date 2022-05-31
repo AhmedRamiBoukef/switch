@@ -4,10 +4,10 @@ import { Link, Route } from "react-router-dom";
 import Cookies from "js-cookie";
 import Navbar from "./Navbar";
 import SideBar from "./SideBar";
-import Image from '../images/forgotpasswordback.jpg'
- function AjouterSwitch(props) {
-   const [locals,setLocals]=useState([]) ;
-   const [marques,setMarques]=useState([]) ;
+import Image from "../images/forgotpasswordback.jpg";
+function AjouterSwitch(props) {
+  const [locals, setLocals] = useState([]);
+  const [marques, setMarques] = useState([]);
   const [loadsubmitDet, setLoadsubmitDet] = useState(false);
   const [Switch, setSwitch] = useState({
     Bloc: "",
@@ -31,97 +31,105 @@ import Image from '../images/forgotpasswordback.jpg'
       parseInt(Switch.Nombre_de_ports_G_E) +
       parseInt(Switch.Nombre_de_ports_SFP);
     console.log("start ajouter ");
-    if(Switch.Bloc!="" && Switch.Armoire!="" && Switch.Nom!="" && Switch.Marque!="" && Switch.Modèle!="" && Switch.Adresse_IP!="" 
-    && Switch.N_d_inventaire!="" && Switch.N_Serie!="" && Switch.Adresse_MAC!=""
-    ){
-    await fetch("http://localhost:5000/api/postswitch", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-access-token": Cookies.get("jwt"),
-      },
-      body: JSON.stringify(Switch),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        // setTimeout(() => {
-        //   //
+    if (
+      Switch.Bloc != "" &&
+      Switch.Armoire != "" &&
+      Switch.Nom != "" &&
+      Switch.Marque != "" &&
+      Switch.Modèle != "" &&
+      Switch.Adresse_IP != "" &&
+      Switch.N_d_inventaire != "" &&
+      Switch.N_Serie != "" &&
+      Switch.Adresse_MAC != ""
+    ) {
+      await fetch("http://localhost:5000/api/postswitch", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-token": Cookies.get("jwt"),
+        },
+        body: JSON.stringify(Switch),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          // setTimeout(() => {
+          //   //
 
-        // }, 7000)
-        setLoadsubmitDet(false);
-        console.log("End ajouter");
-      });
-    props.setNbPorts(n);
-    props.setPort(Switch);
+          // }, 7000)
+          setLoadsubmitDet(false);
+          console.log("End ajouter");
+        });
+      props.setNbPorts(n);
+      props.setPort(Switch);
+    }
   }
-}
   // const Ajouter = () => {
   //   fetch('http://localhost:5000/api/switch'
   //   ).then(res => res.json())
   //     .then(data => console.log(data));
   //  }
 
-
-  useEffect(()=>{
+  useEffect(() => {
     let headersList = {
-      "Accept": "*/*",
+      Accept: "*/*",
       "User-Agent": "Thunder Client (https://www.thunderclient.com)",
       "x-access-token": Cookies.get("jwt"),
-      "Content-Type": "application/json"
-     }
-     
-    
-     
-//  fetch("http://localhost:5000/api/port", { 
-//        method: "GET",
-//        headers: headersList
+      "Content-Type": "application/json",
+    };
 
-    console.log("les locales") ;
-      fetch("http://localhost:5000/local",{
+    //  fetch("http://localhost:5000/api/port", {
+    //        method: "GET",
+    //        headers: headersList
+
+    console.log("les locales");
+    fetch("http://localhost:5000/local", {
       method: "GET",
-      headers: headersList}
-      ).then(function(response) {
-      return response.json();
-     }).then(function(data) {
-       console.log("les locales") ;
-      console.log(data);
-      setLocals(data) ;
-      console.log("==========") ;
-    }).then(()=>{
-      console.log("les marques") ;
+      headers: headersList,
+    })
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        console.log("les locales");
+        console.log(data);
+        setLocals(data);
+        console.log("==========");
+      })
+      .then(() => {
+        console.log("les marques");
 
-      fetch("http://localhost:5000/api/marque",{
-      method: "GET",
-      headers: headersList}
-      ).then(function(response) {
-      return response.json();
-     }).then(function(data) {
-       console.log("les marques") ;
-      console.log(data);
-      setMarques(data) ;
-      // setLocals(data) ;
-      console.log("==========") ;
-    }) ;
-    }) ;
+        fetch("http://localhost:5000/api/marque", {
+          method: "GET",
+          headers: headersList,
+        })
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            console.log("les marques");
+            console.log(data);
+            setMarques(data);
+            // setLocals(data) ;
+            console.log("==========");
+          });
+      });
 
-  //   console.log("les marques") ;
+    //   console.log("les marques") ;
 
-  //   fetch("http://localhost:5000/api/marque",{
-  //   method: "GET",
-  //   headers: headersList}
-  //   ).then(function(response) {
-  //   return response.json();
-  //  }).then(function(data) {
-  //    console.log("les marques") ;
-  //   console.log(data);
-  //   setMarques(data) ;
-  //   // setLocals(data) ;
-  //   console.log("==========") ;
-  // }) ;
-
-
-  },[])
+    //   fetch("http://localhost:5000/api/marque",{
+    //   method: "GET",
+    //   headers: headersList}
+    //   ).then(function(response) {
+    //   return response.json();
+    //  }).then(function(data) {
+    //    console.log("les marques") ;
+    //   console.log(data);
+    //   setMarques(data) ;
+    //   // setLocals(data) ;
+    //   console.log("==========") ;
+    // }) ;
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -135,7 +143,10 @@ import Image from '../images/forgotpasswordback.jpg'
     }
   };
   return (
-    <div style={{ height: "100vh",backgroundImage: `url(${Image})` }} className="flex   w-full   ">
+    <div
+      style={{ height: "100vh", backgroundImage: `url(${Image})` }}
+      className="flex   w-full   "
+    >
       <Navbar></Navbar>
       <div className="scrollbar w-full overflow-y-auto    ">
         <SideBar
@@ -151,8 +162,8 @@ import Image from '../images/forgotpasswordback.jpg'
               </button>
             </Link>
           </div>
-          <form className="sm:w-full lg:w-2/3 mx-auto block rounded-2xl   lg:p-10 px-5 py-3 ">
-            <div className="grid grid-cols-2 lg:gap-y-10 lg:gap-x-28 gap-10 bg-blue-200 lg:p-10 px-5 py-3 rounded-2xl ">
+          <form className="sm:w-full lg:w-5/6 mx-auto block rounded-2xl   lg:p-10 px-5 py-3 ">
+            <div className="grid grid-cols-4 lg:gap-y-10 lg:gap-x-8 gap-10 bg-blue-200 lg:p-10 px-5 py-3 rounded-2xl ">
               <div>
                 <label htmlFor="nomswitch"> Nom Switch </label>
                 <input
@@ -166,7 +177,7 @@ import Image from '../images/forgotpasswordback.jpg'
                 ></input>
               </div>
               <div>
-                <label > Bloc </label>
+                <label> Bloc </label>
                 {/* <input
                   type="text"
                   liste="nomswitches"
@@ -185,28 +196,25 @@ import Image from '../images/forgotpasswordback.jpg'
                     ))}
                   </datalist>
                   } */}
-                
 
-                
                 <input
-                    value={Switch.Bloc}
-                    type="text"
-                    id="nomswitch"
-                    name="Bloc"
-                    list="nomswitchs"
-                    className="block  rounded-md w-full p-2"
-                    onChange={handleChange}
-                    //  onChange={(e) => setBloc(e.target.value)}
-                  ></input>
-                  {locals.length!=0 &&
-                  
+                  value={Switch.Bloc}
+                  type="text"
+                  id="nomswitch"
+                  name="Bloc"
+                  list="nomswitchs"
+                  className="block  rounded-md w-full p-2"
+                  onChange={handleChange}
+                  //  onChange={(e) => setBloc(e.target.value)}
+                ></input>
+                {locals.length != 0 && (
                   <datalist id="nomswitchs">
-                    {locals.map((elem)=>(
+                    {locals.map((elem) => (
                       //<option value={"hello"}></option>
-                       <option key={elem.id} value={elem.local}></option>
+                      <option key={elem.id} value={elem.local}></option>
                     ))}
                   </datalist>
-                  }
+                )}
 
                 {/* <label> Bloc </label>
                   <input
@@ -228,7 +236,7 @@ import Image from '../images/forgotpasswordback.jpg'
                   } */}
               </div>
               <div>
-                <label > Modèle </label>
+                <label> Modèle </label>
                 <input
                   type="text"
                   id="nomswitch"
@@ -264,7 +272,7 @@ import Image from '../images/forgotpasswordback.jpg'
                 ></input>
               </div>
               <div>
-                <label htmlFor="nbreport"> Nombre de ports G_E </label>
+                <label htmlFor="nbreport"> Nbre ports G_E </label>
                 <input
                   className="block  rounded-md w-full p-2"
                   type="text"
@@ -290,25 +298,23 @@ import Image from '../images/forgotpasswordback.jpg'
               <div>
                 <label htmlFor="nbreport"> Marque </label>
                 <input
-                     value={Switch.Marque}
-                    type="text"
-                    id="Marque"
-                    name="Marque"
-                    list="marques"
-                    className="block  rounded-md w-full p-2"
-                    onChange={handleChange}
-                    //  onChange={(e) => setBloc(e.target.value)}
-                  ></input>
-                  {marques.length!=0 &&
-                  
+                  value={Switch.Marque}
+                  type="text"
+                  id="Marque"
+                  name="Marque"
+                  list="marques"
+                  className="block  rounded-md w-full p-2"
+                  onChange={handleChange}
+                  //  onChange={(e) => setBloc(e.target.value)}
+                ></input>
+                {marques.length != 0 && (
                   <datalist id="marques">
-                    {marques.map((elem)=>(
+                    {marques.map((elem) => (
                       //<option value={"hello"}></option>
-                       <option key={elem.id} value={elem.marque}></option>
+                      <option key={elem.id} value={elem.marque}></option>
                     ))}
                   </datalist>
-                  }
-
+                )}
 
                 {/* <input
                   className="block  rounded-md w-full p-2"
@@ -384,7 +390,9 @@ import Image from '../images/forgotpasswordback.jpg'
                 className=" hover:bg-blue-800 bg-blue-700 px-2 py-2 border rounded-lg text-white font-bold block mx-auto mt-4 "
                 onClick={Ajouter}
                 type="submit"
-              >SUIVANT</button>
+              >
+                SUIVANT
+              </button>
             </Link>
           </form>
         </div>

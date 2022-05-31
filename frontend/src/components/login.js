@@ -82,6 +82,9 @@ const Login = (props) => {
           } else {
             setValide(false);
           }
+        })
+        .then(() => {
+          document.location.reload();
         });
       setLoading(false);
       console.log("tout est valide");

@@ -2,18 +2,19 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Image from '../images/forgotpasswordback.jpg'
+import Cookies from "js-cookie";
 
 const ForgotPassword = () => {
     const [Email, setEmail] = useState({ email: "" });
 
     const hanleClick = () => {
         if (Email.email != "") {
-            fetch('http://localhost:5000/api/forgetPassword', {
+            fetch('http://localhost:5000/forgetPassword', {
                 method: 'POST',
                 headers: {
-                    'content-type': 'application/json',
-                    'Accept': 'application/json',
-                },
+                    "Content-Type": "application/json",
+                    "x-access-token": Cookies.get("jwt"),
+                  },
                 body: JSON.stringify(Email)
             })
                 .then(res => res.json())
@@ -40,16 +41,16 @@ const ForgotPassword = () => {
                     <h1 className="text-center mb-2 text-gray-900 text-4xl font-semibold">Mot de passe oublié</h1>
                     <p className="text-center text-lg mb-10">Entrez votre email et nous allons vous envoyez un nouveau sur votre boite email.</p>
 
-                    <form>
+                    <div>
                         <div className="relative">
-                            <label htmlFor="email-address" className="not-sr-only">adresse email</label>
-                            <input id="email-address" x-ref="email" name="email" type="email" required autoFocus className="text-gray-900 ring-gray-900 ring-opacity-5 placeholder-gray-400 appearance-none bg-white rounded-md block w-full px-3 py-2 border border-transparent shadow ring-1 sm:text-xl focus:border-teal-500 focus:ring-teal-500 focus:outline-none" placeholder="Adresse email" onChange={hanleMotDePasseOublié} />
+                            <label>adresse email</label>
+                            <input  name="email" type="email" required autoFocus className="text-gray-900 ring-gray-900 ring-opacity-5 placeholder-gray-400 appearance-none bg-white rounded-md block w-full px-3 py-2 border border-transparent shadow ring-1 sm:text-xl focus:border-teal-500 focus:ring-teal-500 focus:outline-none" placeholder="Adresse email" onChange={hanleMotDePasseOublié} />
                         </div>
 
-                        <button type="submit" className="block w-full py-2 px-3 border border-transparent rounded-md text-white font-medium bg-gray-700 shadow-sm sm:text-xl mt-4 hover:bg-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-700 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-50" onClick={hanleClick}>
+                        <button className="block w-full py-2 px-3 border border-transparent rounded-md text-white font-medium bg-gray-700 shadow-sm sm:text-xl mt-4 hover:bg-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-700 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-50" onClick={hanleClick}>
                             réinitialiser mon mot de passe
                         </button>
-                    </form>
+                    </div>
                 </div>
             </div>
 

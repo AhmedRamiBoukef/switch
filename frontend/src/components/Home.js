@@ -1,30 +1,29 @@
 import Detail from "./Detail";
-import { withRouter } from "react-router-dom"
-; import Recherche from "./Recherche" ; 
+import { withRouter } from "react-router-dom";
+import Recherche from "./Recherche";
 // import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Navbar from "./Navbar";
-import Image from '../images/forgotpasswordback.jpg'
-
+import Image from "../images/forgotpasswordback.jpg";
 
 import "./../index.css";
 import Add from "./Add";
 import SideBar from "./SideBar";
 
-
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 import AjouterSwitch from "./AjouterSwitch";
 
 import Table from "./table";
 import { useEffect, useState } from "react";
 import Usefetch from "./Usefetch";
 import Modifier from "./modifier";
-import Loading from './loading'
+import Loading from "./loading";
 import { useContext } from "react";
 import { LoginContext } from "../Contexts/LoginContext";
 
 const Home = (props) => {
-  const {isAuth}=useContext(LoginContext) ;
+  //document.location.reload();
+  const { isAuth } = useContext(LoginContext);
   const [modifier, setModifer] = useState(false);
   const [switchModifer, setSwitchModifer] = useState({
     _id: "",
@@ -61,58 +60,60 @@ const Home = (props) => {
     Nombre_de_ports_SFP: "",
     ports: [],
   });
-  //get all the switches that we have on the data base 
+  //get all the switches that we have on the data base
   const { switches, loading, setSwitches } = Usefetch(
     "http://localhost:5000/api/switch"
   );
-  const [lesSwitches , setLesSwitches] = useState([]) ; 
-  const [ports , setPorts ] = useState([]);
-   useEffect(()=>{
+  const [lesSwitches, setLesSwitches] = useState([]);
+  const [ports, setPorts] = useState([]);
+
+  useEffect(() => {
     // fetch("http://localhost:5000/api/port")
     // .then(function  (responce)  {
     //   return responce.json();
     // }).then(function(data){
-    //   setPorts(data) ; 
-    //   console.log("les ports "  ) ; 
-    //   console.log("les switches " , switches ) ; 
+    //   setPorts(data) ;
+    //   console.log("les ports "  ) ;
+    //   console.log("les switches " , switches ) ;
     // })
     let headersList = {
-      "Accept": "*/*",
+      Accept: "*/*",
       "User-Agent": "Thunder Client (https://www.thunderclient.com)",
       "x-access-token": Cookies.get("jwt"),
-      "Content-Type": "application/json"
-     }
-     
-    
-     
- fetch("http://localhost:5000/api/port", { 
-       method: "GET",
-       headers: headersList
-     }).then(function(response) {
-       return response.json();
-     }).then(function(data) {
-       console.log(data);
-       setPorts(data) ; 
-     }) ; 
-     fetch("http://localhost:5000/api/switch", { 
-       method: "GET",
-       headers: headersList
-     }).then(function(response) {
-       return response.json();
-     }).then(function(data) {
-       console.log(data);
-       setLesSwitches(data) ; 
-     }) ; 
+      "Content-Type": "application/json",
+    };
 
-   } , []) ; 
-  
+    fetch("http://localhost:5000/api/port", {
+      method: "GET",
+      headers: headersList,
+    })
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        console.log(data);
+        setPorts(data);
+      });
+    fetch("http://localhost:5000/api/switch", {
+      method: "GET",
+      headers: headersList,
+    })
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        console.log(data);
+        setLesSwitches(data);
+      });
+  }, []);
 
-  
   function getDetails(elem) {
     fetch("http://localhost:5000/api/getbyid", {
       method: "POST",
-      headers: {  'Content-Type': 'application/json',
-      'x-access-token': Cookies.get("jwt"), },
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": Cookies.get("jwt"),
+      },
       body: JSON.stringify({ _id: elem._id }),
     })
       .then((res) => {
@@ -159,14 +160,14 @@ const Home = (props) => {
         <div className="App">
           <div className="App  " style={{ height: "100vh" }}>
             <div className="flex" style={{ height: "100vh" }}>
-              <Navbar  />
+              <Navbar />
               <div
                 style={{ height: "100vh" }}
                 className="scrollbar w-full overflow-auto "
               >
                 <SideBar
                   image="./../images/image01.png"
-                  nom= {props.user2.name}
+                  nom={props.user2.name}
                   titre="Acceuil"
                 />
                 {!searche && (
@@ -184,7 +185,12 @@ const Home = (props) => {
                 )}
 
                 {searche ? (
-                  <Recherche switches={switches} ports = {ports} setSwitches = {setSwitches } lesSwitches = {lesSwitches} />
+                  <Recherche
+                    switches={switches}
+                    ports={ports}
+                    setSwitches={setSwitches}
+                    lesSwitches={lesSwitches}
+                  />
                 ) : (
                   <Detail Detailswitch={Detailswitch} />
                 )}
@@ -204,10 +210,8 @@ const Home = (props) => {
           </div>
         </div>
       )}
-      
     </div>
-
   );
 };
 
-export default (Home) ;
+export default Home;
